@@ -100,10 +100,14 @@ class Schermo extends JPanel {
         Palla palla = partita.getPalla();
         int r = palla.getRaggio();
         Posizione p = palla.getPosizione();
-        if (!
-            partita.getLivello().nebbia().nasconde(p)) {
-         g2.fillOval((int) Math.round(p.x() - r), (int) Math.round(p.y() - r), 2 * r, 2 * r); }
-
+        if (!partita.getLivello().nebbia().nasconde(p)) {
+    g2.fillOval(
+        (int) Math.round(p.x() - r),
+        (int) Math.round(p.y() - r),
+        2 * r,
+        2 * r
+    );
+}
         g2.setFont(new Font(Font.MONOSPACED, Font.BOLD, 48));
         g2.drawString(String.valueOf(partita.getPunti(Lato.SINISTRA)), larghezza / 2 - 80, 60);
         g2.drawString(String.valueOf(partita.getPunti(Lato.DESTRA)), larghezza / 2 + 50, 60);
