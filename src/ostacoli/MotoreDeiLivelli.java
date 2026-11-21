@@ -2,6 +2,7 @@
 package ostacoli;
 
 import geometria.Rettangolo;
+import nebbia.Nebbia;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +40,22 @@ public class MotoreDeiLivelli {
         }
         double velocita = VELOCITA_AL_LIVELLO_1 + VELOCITA_IN_PIU_A_OGNI_LIVELLO * (numero - 1);
         double errore = Math.max(0, ERRORE_AL_LIVELLO_1 - ERRORE_IN_MENO_A_OGNI_LIVELLO * (numero - 1));
-        return new Livello(numero, velocita, errore, new Ostacoli(ostacoli(numero, larghezzaCampo / 2.0, altezzaCampo / 2.0)));
-    }
+        Nebbia nebbia = Nebbia.nessuna();
+
+if (numero == 3) {
+    nebbia = Nebbia.alCentro(larghezzaCampo, altezzaCampo, 0.30);
+}
+
+if (numero == 4) {
+    nebbia = Nebbia.alCentro(larghezzaCampo, altezzaCampo, 0.35);
+}
+
+if (numero == 5) {
+    
+nebbia = Nebbia.alCentro(larghezzaCampo, altezzaCampo, 0.40);
+} return new Livello(numero, velocita, errore,
+        new Ostacoli(ostacoli(numero, larghezzaCampo / 2.0,
+                altezzaCampo / 2.0)), nebbia);}
 
     /**
      * Gli ostacoli del livello numero, attorno al centro (cx, cy) del campo. Si aggiungono di livello
@@ -60,7 +75,7 @@ public class MotoreDeiLivelli {
             ostacoli.add(new OstacoloFragile(attorno(cx, cy, -90, 70, 20, 40), 2));
             ostacoli.add(new OstacoloFragile(attorno(cx, cy, 90, -70, 20, 40), 2));
         }
-        if (numero >= 4) {
+        if (numero >=4) {
             // altri due fissi vicino alle racchette e due fragili da tre colpi, in alto e in basso
             ostacoli.add(new OstacoloFisso(attorno(cx, cy, -220, 110, 20, 60)));
             ostacoli.add(new OstacoloFisso(attorno(cx, cy, 220, -110, 20, 60)));
@@ -89,5 +104,8 @@ public class MotoreDeiLivelli {
     /** Il rettangolo largo larghezza e alto altezza, con il centro spostato di (dx, dy) dal centro (cx, cy) del campo. */
     private static Rettangolo attorno(double cx, double cy, double dx, double dy, double larghezza, double altezza) {
         return new Rettangolo(cx + dx - larghezza / 2, cy + dy - altezza / 2, larghezza, altezza);
+    }
+
+    public MotoreDeiLivelli() {
     }
 }
